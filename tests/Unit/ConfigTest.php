@@ -103,6 +103,16 @@ class ConfigTest extends TestCase
         $this->checkEnvConfigResult('MAIL_SENDMAIL_COMMAND', '/var/sendmail -o', 'mail.mailers.sendmail.path', '/var/sendmail -o');
     }
 
+    public function test_brevo_api_key_is_configurable()
+    {
+        $this->checkEnvConfigResult('BREVO_API_KEY', 'xkeysib-test-key', 'services.brevo.key', 'xkeysib-test-key');
+    }
+
+    public function test_mail_driver_can_be_set_to_brevo()
+    {
+        $this->checkEnvConfigResult('MAIL_DRIVER', 'brevo', 'mail.default', 'brevo');
+    }
+
     public function test_mail_disable_ssl_verification_alters_mailer()
     {
         $getStreamOptions = function (): array {

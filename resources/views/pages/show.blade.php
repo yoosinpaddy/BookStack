@@ -1,5 +1,12 @@
 @extends('layouts.tri')
 
+@push('head')
+    <script type="module" nonce="{{ $cspNonce ?? '' }}">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+@endpush
+
 @push('social-meta')
     <meta property="og:description" content="{{ Str::limit($page->text, 100, '...') }}">
 @endpush
