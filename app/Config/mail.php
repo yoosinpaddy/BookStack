@@ -18,7 +18,7 @@ return [
     // Mail driver to use.
     // From Laravel 7+ this is MAIL_MAILER in laravel.
     // Kept as MAIL_DRIVER in BookStack to prevent breaking change.
-    // Options: smtp, sendmail, log, array
+    // Options: smtp, sendmail, log, array, brevo
     'default' => env('MAIL_DRIVER', 'smtp'),
 
     // Global "From" address & name
@@ -55,6 +55,10 @@ return [
 
         'array' => [
             'transport' => 'array',
+        ],
+
+        'brevo' => [
+            'transport' => 'brevo',
         ],
 
         'failover' => [

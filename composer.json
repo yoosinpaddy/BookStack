@@ -40,6 +40,8 @@
         "socialiteproviders/okta": "^4.2",
         "socialiteproviders/twitch": "^5.3",
         "ssddanbrown/htmldiff": "^2.0.0",
+        "symfony/brevo-mailer": "^7.4",
+        "symfony/http-client": "^7.4",
         "xemlock/htmlpurifier-html5": "^0.1.12"
     },
     "require-dev": {

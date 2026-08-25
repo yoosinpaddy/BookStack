@@ -16,9 +16,12 @@ use BookStack\Settings\SettingService;
 use BookStack\Util\CspService;
 use Illuminate\Contracts\Foundation\ExceptionRenderer;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Mailer\Bridge\Brevo\Transport\BrevoTransportFactory;
+use Symfony\Component\Mailer\Transport\Dsn;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -71,6 +74,17 @@ class AppServiceProvider extends ServiceProvider
             $hostName = parse_url($appUrl, PHP_URL_HOST) ?: null;
             config()->set('mail.mailers.smtp.local_domain', $hostName);
         }
+
+        Mail::extend('brevo', function () {
+            $key = config('services.brevo.key');
+            if (!is_string($key) || $key === '') {
+                throw new \InvalidArgumentException('BREVO_API_KEY must be set when MAIL_DRIVER=brevo.');
+            }
+
+            return (new BrevoTransportFactory())->create(
+                new Dsn('brevo+api', 'default', $key)
+            );
+        });
 
         // Allow longer string lengths after upgrade to utf8mb4
         Schema::defaultStringLength(191);
